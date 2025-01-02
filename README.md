@@ -1,9 +1,10 @@
 Genome assemble and genomic annotation for the grassland caterpillar Gynaephora qinghaiensis
-====
+======
 
 1.Genome assemble
------
+-------
 1.1 quality-filtering 
+-------
 fastp (v0.20.0) for BGI short-reads
 ```
 fastp -I raw.R1.fq.gz -I raw.R2.fq.gz -o clean_R1.fq.gz -O clean_R2.fq.gz -n 0 -f 5 -F 5 -t 5 -T 5
@@ -14,12 +15,14 @@ guppy_basecaller -i fast5/ -c /opt/ont/guppy/data/dna_r9.4.1_450bps_fast.cfg -s 
 ```
 
 1.2 Genome size and heterozygosity estimation using kmerfreq
+-------
 ```
 kmerfreq -k 17 ngs_fastq.lst
 ```
 ngs_fastq.lst is a library file that contains the path of all the input sequence files in fastq format
 
 1.3 Genome assemble and polish
+-------
 de novo genome assemble using NextDenovo (v2.3.113)
 ```
 nextDenovo nextDenovo.run.cfg
@@ -43,6 +46,7 @@ purge_haplotigs purge -g assembly.fasta -c coverage_stats.csv -b aligned.bam -a 
 ```
 
 1.4 genome assembly completeness evaluation using BUSCO (v5.5.0)
+-------
 ```
 busco -i Gqin.genome.fasta -c 8 -o busco -m geno -l insecta_odb10 -offline
 ```
@@ -50,6 +54,7 @@ busco -i Gqin.genome.fasta -c 8 -o busco -m geno -l insecta_odb10 -offline
 2.Genome annotation
 -----
 2.1 Repeat annotation
+-------
 De novo predictions for long terminal repeat element (LTR) using LTR_Finder (v1.0.7) and LTR_retriever 
 ```
 ltr_finder Gqin.genome.fasta > Gqin.scn
@@ -74,12 +79,15 @@ RepeatMasker -a -lib  repeat_ref.fa -pa 80 -gff -dir ./masker Gqin.genome.fasta
 ```
 
 2.2 Protein coding gene annotation
-ab initio prediction using Braker2(v2.1.2)
+-------
+2.2.1 ab initio prediction using Braker2(v2.1.2)
+-------
 ```
 braker.pl --genome=Gqin.genome.masked.fasta —species=Gqin —prot_seq=ref_prot_filter.fasta --threads 50 --gff3
 ```
 
-homology-based prediction
+2.2.2 homology-based prediction
+-------
 Exonerate(v2.2.023) 
 ```
 exonerate --model protein2genome --percent 60 ref_prot_filter.fasta Gqin.genome.masked.fasta --showtargetgff yes --showalignment no --score 100 > exonerate_result.txt
@@ -99,7 +107,8 @@ combine results
 cat Gqin.exonerate.gff Gqin.gth.gff > Gqin.homolog.gff3
 ```
 
-Transcriptome-based prediction 
+2.2.3 Transcriptome-based prediction 
+-------
 hisat (v2.2.1) & samtools (v1.16.1)
 ```
 hisat2-build Gqin.genome.masked.fasta Gqin_genome
@@ -118,7 +127,8 @@ stringtie -p 20 -o E1.gtf -l E1 E1.bam
 stringtie --merge -p 50 -o stringtie_merge.gtf mergelist.txt
 ```
 
-TransDecoder(v5.5.0) & hmmer (v3.3.2) & blast+ (v2.13.0)
+2.2.4 TransDecoder(v5.5.0) & hmmer (v3.3.2) & blast+ (v2.13.0)
+-------
 ```
 pwd_to_TransDecoder/util/gtf_genome_to_cdna_fasta.pl stringtie_merge.gtf Gqin.genome.masked.fasta > transcripts.fasta
 ```
@@ -141,7 +151,8 @@ TransDecoder.Predict -t transcripts.fasta --retain_pfam_hits pfam.domtblout --re
 pwd_to_TransDecoder/util/cdna_alignment_orf_to_genome_orf.pl transcripts.fasta.transdecoder.gff3 stringtie_merge.gff3 transcripts.fasta > transcripts.fasta.transdecoder.genome.gff3
 ```
 
-EVidenceModeler (v1.1.1)
+2.2.5 EVidenceModeler (v1.1.1)
+-------
 ```
 pwd_to_EVM/EVidenceModeler-1.1.1/EvmUtils/partition_EVM_inputs.pl --genome Gqin.genome.masked.fasta --gene_predictions gff3/braker.gff3 --protein_alignments gff3/Gqin.homolog.gff3 --transcript_alignments
 gff3/transcripts.fasta.transdecoder.genome.gff3 --segmentSize 100000 --overlapSize 10000 --partition_listing partitions_list.out
@@ -167,7 +178,8 @@ gffread Gqin.evm.gff3 -g Gqin.genome.softmasked.fasta -x GynQin.OGS.cds.fa -y Gy
 
 3.Genome functional annotation
 -----
-3.1 align to Nr database (v2.13.0)
+3.1 blast to Nr database
+-------
 ```
 blastp --db /database/nr -query GynQin.OGS.pep.fa --outfmt 6 -o Gqin.diamond.nr.txt --quiet -e 1e-5 --threads 60 > nr.blastp.outfmt6
 ```
@@ -175,7 +187,8 @@ blastp --db /database/nr -query GynQin.OGS.pep.fa --outfmt 6 -o Gqin.diamond.nr.
 perl get_annotation.pl nr.blastp.outfmt6 uniprot_sprot.fasta > Gqin.nr.Annotation.txt
 ```
 
-3.2 align to uniprot database using blast+ (v2.13.0)
+3.2 blast to SwissProt database
+-------
 ```
 blastp -query GynQin.OGS.pep.fa -db uniprot_sprot.fasta -outfmt 6 -evalue 1e-5 -num_threads 60 > uniprot.blastp.outfmt6
 ```
@@ -183,7 +196,8 @@ blastp -query GynQin.OGS.pep.fa -db uniprot_sprot.fasta -outfmt 6 -evalue 1e-5 -
 perl get_annotation.pl uniprot.blastp.outfmt6 uniprot_sprot.fasta > Gqin.uniprot.Annotation.txt
 ```
 
-3.3 protein domain searching using hmmer (v3.3.2)
+3.3 protein domain searching
+-------
 ```
 hmmscan --cpu 40 -E 1e-5 --domtblout pfam.domtblout Pfam-A.hmm GynQin.OGS.pep.fa
 ```
@@ -192,14 +206,17 @@ perl get_hmmer_result.pl pfam.domtblout
 ```
 
 3.4 KEGG（Kyoto Encyclopedia of Genes and Genomes）annotation
+-------
 Submit annotated amino acid sequences to BlastKOALA（https://www.kegg.jp/blastkoala/)
 
 3.5 GO（Gene Ontology）annotation
+-------
 Submit annotated amino acid sequences to PANNZER (http://ekhidna2.biocenter.helsinki.fi/sanspanz/)
 
 4.Comparative genomics
 -----
 4.1 orthofinder
+-------
 extract the longest sequence for each genes
 ```
 perl get_protein_and_cds.pl GCF_002156985.1_Harm_1.0_protein.faa cds_sequence.txt GCF_002156985.1_Harm_1.0_genomic.gff -prefix HelArm
@@ -211,6 +228,7 @@ orthofinder -f protein
 ```
 
 4.2 Phylogenetic tree construction
+-------
 
 aligned with MAFFT (v7.123b) and trim using trimAl (v1.4.rev22)
 ```
@@ -229,11 +247,13 @@ iqtree2 -s supergene_prot.fa -T AUTO -m  Q.insect+F+R6 -B 1000
 ```
 
 4.3 estimate divergence times using r8s （v1.81）
+-------
 ```
 r8s -b -f r8s_in.txt > r8s_out.txt
 ```
 
 4.4 Cafe
+-------
 ```
 cafe cafe.sh
 ```
