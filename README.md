@@ -80,7 +80,7 @@ RepeatMasker -a -lib  repeat_ref.fa -pa 80 -gff -dir ./masker Gqin.genome.fasta
 
 2.2 Protein coding gene annotation
 -------
-2.2.1 ab initio prediction using Braker2(v2.1.2)
+2.2.1 ab initio prediction using Braker2 (v2.1.2)
 -------
 ```
 braker.pl --genome=Gqin.genome.masked.fasta —species=Gqin —prot_seq=ref_prot_filter.fasta --threads 50 --gff3
@@ -88,14 +88,14 @@ braker.pl --genome=Gqin.genome.masked.fasta —species=Gqin —prot_seq=ref_prot
 
 2.2.2 homology-based prediction
 -------
-Exonerate(v2.2.023) 
+Exonerate (v2.2.023) 
 ```
 exonerate --model protein2genome --percent 60 ref_prot_filter.fasta Gqin.genome.masked.fasta --showtargetgff yes --showalignment no --score 100 > exonerate_result.txt
 ```
 ```
 perl Convert_exonerate.pl exonerate_result.txt > Gqin.exonerate.gff
 ```
-GenomeThreader(v1.7.1)
+GenomeThreader (v1.7.1)
 ```
 gth -species drosophila -genomic Gqin.genome.masked.fasta -protein ref_prot_filter.fasta -intermediate -gff3out -o gth_result.txt
 ```
@@ -187,7 +187,7 @@ blastp --db /database/nr -query GynQin.OGS.pep.fa --outfmt 6 -o Gqin.diamond.nr.
 perl get_blast_annotation.pl nr.blastp.outfmt6 uniprot_sprot.fasta > Gqin.nr.Annotation.txt
 ```
 
-3.2 blast to SwissProt database
+3.2 blast to Uniprot database
 -------
 ```
 blastp -query GynQin.OGS.pep.fa -db uniprot_sprot.fasta -outfmt 6 -evalue 1e-5 -num_threads 60 > uniprot.blastp.outfmt6
