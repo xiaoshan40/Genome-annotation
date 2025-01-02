@@ -1,0 +1,34 @@
+#NEXUS
+begin trees;
+        tree tree_1 = [&R] ((DanPle:0.258682,(AmyTra:0.202614,(((ArcPla:0.108925,((EupSim:0.132775,(GynQin:0.044852,OrgAnt:0.057798):0.043786):0.012554,LymMon:0.091625):0.03606):0.037716,((HelArm:0.057768,SpoLit:0.071409):0.026278,TriNi:0.084238):0.028904):0.052963,((BomMor:0.205117,ManSex:0.134749):0.033348,OpeBru:0.289943):0.009631):0.02688):0.024791):0.158628,PluXyl:0.158628);
+end;
+
+begin r8s;
+begin rates;
+collapse;
+blformat lengths=persite nsites=1603167 ulrametric=no;
+MRCA DITRY PluXyl ArcPla;
+MRCA NOCTU TriNi GynQin;
+MRCA BOMBY BomMor ManSex;
+MRCA APODI DanPle ArcPla;
+FIXAGE taxon=DITRY age=154.7;
+constrain taxon=NOCTU min_age=67 max_age=88.6;
+constrain taxon=BOMBY min_age=70.1 max_age=89.9;
+constrain taxon=APODI min_age=105.6 max_age=132.1;
+set penalty=log smoothing=3;
+divtime method=PL algorithm=TN;
+showage shownamed=yes;
+set checkgradient=yes smoothing=3;
+divtime method=pl algorithm=tn;
+showage;
+describe plot=phylogram;
+describe plot=chronogram;
+describe plot=tree_description;
+describe plot=chrono_description;
+describe plot=phylo_description;
+describe plot=rato_description;
+showage;
+set penalty=add checkgradient=no;
+DIVTIME method=PL fossilconstrained=yes crossv=yes cvstart=0 cvinc=0.50 cvnum=6 algorithm=tn;
+DIVTIME method=PL fossilfixed=yes crossv=yes cvstart=0 cvinc=0.50 cvnum=6 algorithm=tn;
+end;
