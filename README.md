@@ -91,7 +91,6 @@ gth -species drosophila -genomic Gqin.genome.masked.fasta -protein ref_prot_filt
 ```
 perl Convert_gth.pl all.gth > Gqin.gth.gff
 ```
-```
 combine results
 ```
 cat Gqin.exonerate.gff Gqin.gth.gff > Gqin.homolog.gff3
