@@ -1,4 +1,4 @@
-Genome assemble and genomic annotation for the grassland caterpillar Gynaephora qinghaiensis
+Genome assemble and genomic annotation for the grassland caterpillar *Gynaephora qinghaiensis*
 ======
 
 1.Genome assemble
@@ -23,7 +23,7 @@ ngs_fastq.lst is a library file that contains the path of all the input sequence
 
 1.3 Genome assemble and polish
 -------
-de novo genome assemble using NextDenovo (v2.3.113)
+*de novo* genome assemble using NextDenovo (v2.3.113)
 ```
 nextDenovo nextDenovo.run.cfg
 ```
