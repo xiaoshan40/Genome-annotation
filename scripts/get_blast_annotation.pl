@@ -39,6 +39,5 @@ while (<$NR>) {
 close $NR;
 
 my $result;
-foreach (@gene_list){$result.="$_\t$Annotation{$link{$_}}\n"}
-open OUT1, ">", "Gqin.Nr.Annotation.best.txt";
-print OUT1 $result;
+foreach (@gene_list){
+  print "$_\t$Annotation{$link{$_}}\n"};
