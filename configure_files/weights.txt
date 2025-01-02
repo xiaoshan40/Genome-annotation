@@ -1,0 +1,4 @@
+ABINITIO_PREDICTION      AUGUSTUS       3
+PROTEIN         exonerate 4
+PROTEIN         gth   4
+TRANSCRIPT      transdecoder      10
