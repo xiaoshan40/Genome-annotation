@@ -255,7 +255,7 @@ r8s -b -f r8s_in.txt > r8s_out.txt
 4.4 Cafe (v5.0)
 -------
 ```
-cafe5 -i gene_family.txt -t tree.txt
+cafe5 -i gene_families.txt -t tree.txt
 ```
 
 
