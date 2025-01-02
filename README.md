@@ -252,10 +252,10 @@ iqtree2 -s supergene_prot.fa -T AUTO -m  Q.insect+F+R6 -B 1000
 r8s -b -f r8s_in.txt > r8s_out.txt
 ```
 
-4.4 Cafe
+4.4 Cafe (v5.0)
 -------
 ```
-cafe cafe.sh
+cafe5 -i gene_family.txt -t tree.txt
 ```
 
 
