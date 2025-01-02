@@ -1,0 +1,15 @@
+E1.gtf
+E2.gtf
+E3.gtf
+FA1.gtf
+FA2.gtf
+FA3.gtf
+FL1.gtf
+FL2.gtf
+FL3.gtf
+FP1.gtf
+FP2.gtf
+FP3.gtf
+L1.gtf
+L2.gtf
+L3.gtf
