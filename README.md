@@ -167,7 +167,7 @@ gffread Gqin.evm.gff3 -g Gqin.genome.softmasked.fasta -x GynQin.OGS.cds.fa -y Gy
 
 3.Genome functional annotation
 -----
-3.1 blast to Nr database
+3.1 align to Nr database (v2.13.0)
 ```
 blastp --db /database/nr -query GynQin.OGS.pep.fa --outfmt 6 -o Gqin.diamond.nr.txt --quiet -e 1e-5 --threads 60 > nr.blastp.outfmt6
 ```
@@ -175,7 +175,7 @@ blastp --db /database/nr -query GynQin.OGS.pep.fa --outfmt 6 -o Gqin.diamond.nr.
 perl get_annotation.pl nr.blastp.outfmt6 uniprot_sprot.fasta > Gqin.nr.Annotation.txt
 ```
 
-3.2 blast to SwissProt database
+3.2 align to uniprot database using blast+ (v2.13.0)
 ```
 blastp -query GynQin.OGS.pep.fa -db uniprot_sprot.fasta -outfmt 6 -evalue 1e-5 -num_threads 60 > uniprot.blastp.outfmt6
 ```
@@ -183,7 +183,7 @@ blastp -query GynQin.OGS.pep.fa -db uniprot_sprot.fasta -outfmt 6 -evalue 1e-5 -
 perl get_annotation.pl uniprot.blastp.outfmt6 uniprot_sprot.fasta > Gqin.uniprot.Annotation.txt
 ```
 
-3.3 protein domain searching
+3.3 protein domain searching using hmmer (v3.3.2)
 ```
 hmmscan --cpu 40 -E 1e-5 --domtblout pfam.domtblout Pfam-A.hmm GynQin.OGS.pep.fa
 ```
