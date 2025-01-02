@@ -114,7 +114,7 @@ stringtie -p 20 -o E1.gtf -l E1 E1.bam
 ```
 stringtie --merge -p 50 -o stringtie_merge.gtf mergelist.txt
 ```
-```
+
 TransDecoder(v5.5.0) & hmmer (v3.3.2) & blast+ (v2.13.0)
 ```
 pwd_to_TransDecoder/util/gtf_genome_to_cdna_fasta.pl stringtie_merge.gtf Gqin.genome.masked.fasta > transcripts.fasta
