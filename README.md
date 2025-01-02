@@ -2,6 +2,7 @@ Genome assemble and genomic annotation for the grassland caterpillar Gynaephora 
 ====
 
 1.Genome assemble
+-----
 1.1 quality-filtering 
 fastp (v0.20.0) for BGI short-reads
 ```
@@ -47,6 +48,7 @@ busco -i Gqin.genome.fasta -c 8 -o busco -m geno -l insecta_odb10 -offline
 ```
 
 2.Genome annotation
+-----
 2.1 Repeat annotation
 De novo predictions for long terminal repeat element (LTR) using LTR_Finder (v1.0.7) and LTR_retriever 
 ```
@@ -164,6 +166,7 @@ gffread Gqin.evm.gff3 -g Gqin.genome.softmasked.fasta -x GynQin.OGS.cds.fa -y Gy
 ```
 
 3.Genome functional annotation
+-----
 3.1 blast to Nr database
 ```
 blastp --db /database/nr -query GynQin.OGS.pep.fa --outfmt 6 -o Gqin.diamond.nr.txt --quiet -e 1e-5 --threads 60 > nr.blastp.outfmt6
@@ -195,6 +198,7 @@ Submit annotated amino acid sequences to BlastKOALA（https://www.kegg.jp/blastk
 Submit annotated amino acid sequences to PANNZER (http://ekhidna2.biocenter.helsinki.fi/sanspanz/)
 
 4.Comparative genomics
+-----
 4.1 orthofinder
 extract the longest sequence for each genes
 ```
