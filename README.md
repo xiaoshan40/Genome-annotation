@@ -60,7 +60,7 @@ De novo predictions for long terminal repeat element (LTR) using LTR_Finder (v1.
 ltr_finder Gqin.genome.fasta > Gqin.scn
 ```
 ```
-LTR_retriever -genome Gqin.LTR.fa -infinder Gqin.scn
+LTR_retriever -genome Gqin.genome.fasta -infinder Gqin.scn
 ```
 De novo predictions for non-LTR using Repeatmodeler (v2.0.1)
 ```
